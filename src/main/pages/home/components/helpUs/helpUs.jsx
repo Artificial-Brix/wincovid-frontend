@@ -21,6 +21,7 @@ const useStyles = makeStyles({
         borderRadius: '4px',
         border: 'none',
         margin: '16px 5px',
+        cursor: 'pointer'
     },
 
     seeMoreButton: {
@@ -31,7 +32,8 @@ const useStyles = makeStyles({
         fontFamily: 'Poppins',
         margin: '5px 0',
         fontSize: '14px',
-        color: '#8692A6'
+        color: '#8692A6',
+        cursor: 'pointer',
     },
     blurContainer: {
         height: '60px',

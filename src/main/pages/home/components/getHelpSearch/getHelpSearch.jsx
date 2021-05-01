@@ -39,6 +39,7 @@ const useStyles = makeStyles({
     borderRadius: '4px',
     border: 'none',
     margin: '16px 0',
+    cursor: 'pointer',
   },
 });
 

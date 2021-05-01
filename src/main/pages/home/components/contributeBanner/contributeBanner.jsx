@@ -8,12 +8,11 @@ const useStyles = makeStyles({
   root: {
     background: 'linear-gradient(80.06deg, #6045E2 0.83%, #6F50FF 100%)',
     margin: '20px 0',
-    borderRadius: '4px'
+    borderRadius: '4px',
+    cursor: "pointer",
   },
   image: {
     maxWidth:'100%',
-    // maxHeight: '100%'
-
   },
   heading: {
     fontFamily: 'Poppins',
@@ -42,10 +41,7 @@ const useStyles = makeStyles({
       fontSize:'1rem',
     }
   }
-
 });
-
-
 
 const ContributeCard = () => {
   const classes = useStyles();

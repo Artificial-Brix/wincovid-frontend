@@ -108,7 +108,7 @@ const GetHelp = ({setSearchQuery}) => {
   return (
     <Grid container alignItems="center" justify="center">
       <Grid item xs={12}>
-        <h3 className={classes.heading}>Go For Help</h3>
+        <h3 className={classes.heading}>Get Help</h3>
       </Grid>
       <Grid item xs={12}>
         <FormLabel className={classes.text}>Please Enter these necessary details</FormLabel>

@@ -115,7 +115,7 @@ const GetHelp = ({setSearchQuery}) => {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Pin Code"
+          label="Pincode"
           variant="outlined"
           fullWidth
           className={classes.inputBox}

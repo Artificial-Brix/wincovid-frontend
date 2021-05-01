@@ -77,7 +77,7 @@ const HelpUs = ({getHelpPosts}) => {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <div style={{ position: 'relative' }}>
+                <div style={{ position: 'absolute' }}>
                     <div className={classes.blurContainer}>
 
                     </div>

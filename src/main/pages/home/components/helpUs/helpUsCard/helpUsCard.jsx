@@ -12,7 +12,8 @@ const useStyles = makeStyles({
         margin: '8px 0',
         '@media (max-width: 600px)': {
             padding: '8px',
-        }
+        },
+        cursor: 'pointer',
     },
     callImage: {
         maxWidth: '100%',

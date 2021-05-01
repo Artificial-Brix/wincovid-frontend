@@ -21,6 +21,7 @@ const useStyles = makeStyles({
         borderRadius: '4px',
         border: 'none',
         margin: '16px 5px',
+        cursor: 'pointer',
     },
 })
 const HelpUsPage = (props) => {

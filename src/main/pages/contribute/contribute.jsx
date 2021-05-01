@@ -227,7 +227,7 @@ const Contribute = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="PinCode"
+              label="Pincode"
               variant="outlined"
               fullWidth
               className={classes.inputBox}

@@ -188,7 +188,7 @@ const AskForHelp = () => {
               variant="outlined"
               fullWidth
               className={classes.inputBox}
-              helperText="Enter suppliers name"
+              helperText="Enter your name"
               value={name}
               onInput={(e) => setName(e.target.value)}
               error={validationState && !isValidName()}
@@ -212,7 +212,7 @@ const AskForHelp = () => {
               variant="outlined"
               fullWidth
               className={classes.inputBox}
-              helperText="Enter suppliers Phone No"
+              helperText="Enter your Phone No"
               value={phoneNo}
               onInput={(e) => setPhoneNo(e.target.value)}
               error={validationState && !isValidPhoneNo()}
@@ -224,7 +224,7 @@ const AskForHelp = () => {
               variant="outlined"
               fullWidth
               className={classes.inputBox}
-              helperText="Enter suppliers PinCode"
+              helperText="Enter Your PinCode"
               value={pinCode}
               onInput={(e) => setPinCode(e.target.value)}
               error={validationState && pinCode.length !== 6}

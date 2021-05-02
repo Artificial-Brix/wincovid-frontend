@@ -65,7 +65,7 @@ const GetHelp = ({setSearchQuery}) => {
     ambulance,
     medicine,
     beds,
-    icuBeds
+    icuBeds,
     food,
     others,
   } = checkBoxData;

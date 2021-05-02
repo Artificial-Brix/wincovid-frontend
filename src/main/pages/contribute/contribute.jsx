@@ -70,6 +70,7 @@ const Contribute = () => {
     ambulance,
     medicine,
     beds,
+    icuBeds,
     food,
     others,
   } = checkBoxData;

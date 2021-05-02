@@ -54,6 +54,7 @@ const Contribute = () => {
     ambulance: false,
     medicine: false,
     beds: false,
+    icuBeds: false,
     food: false,
     others: false,
   });

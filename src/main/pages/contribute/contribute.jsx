@@ -313,6 +313,7 @@ const Contribute = () => {
                   }
                   label="Beds"
                 />
+              </Grid>
               <Grid item xs={6} md={4} lg={2}>
                 <FormControlLabel
                   control={

@@ -73,7 +73,7 @@ const Contribute = () => {
     food,
     others,
   } = checkBoxData;
-  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, food, others];
+  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
   const handleChange = (event) => {
     setCheckBoxData({
       ...checkBoxData,
@@ -103,6 +103,7 @@ const Contribute = () => {
     formData.append('ambulance', checkBoxData.ambulance);
     formData.append('medicine', checkBoxData.medicine);
     formData.append('beds', checkBoxData.beds);
+    formData.append('icuBeds', checkBoxData.icuBeds);
     formData.append('food', checkBoxData.food);
     formData.append('others', checkBoxData.others);
     formData.append('bloodPlasma', checkBoxData.bloodPlasma);
@@ -125,6 +126,7 @@ const Contribute = () => {
           ambulance: false,
           medicine: false,
           beds: false,
+          icuBeds: false,
           food: false,
           others: true,
         });
@@ -145,7 +147,7 @@ const Contribute = () => {
       isValidPhoneNo() &&
       isValidEmail() &&
       isValidAdditionalDetails() &&
-      values.some((value)=>value===true)
+      values.some((value) => value === true)
     ) {
       await isValidPinCode(pinCode)
         .then((res) => {
@@ -238,12 +240,12 @@ const Contribute = () => {
             />
           </Grid>
           <Grid item xs={12}>
-          <FormControl error ={validationState && !values.some((value)=>value===true)}>
-            <FormLabel component="legend">
-              Check the resources you have
+            <FormControl error={validationState && !values.some((value) => value === true)}>
+              <FormLabel component="legend">
+                Check the resources you have
             </FormLabel>
-          </FormControl>
-            
+            </FormControl>
+
             <Grid container justify="flex-start" alignItems="center">
               <Grid item xs={6} md={4} lg={2}>
                 <FormControlLabel
@@ -308,6 +310,18 @@ const Contribute = () => {
                     />
                   }
                   label="Beds"
+                />
+              <Grid item xs={6} md={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={icuBeds}
+                      onChange={handleChange}
+                      name="icuBeds"
+                    />
+                  }
+                  label="ICU Beds"
                 />
               </Grid>
               <Grid item xs={6} md={4} lg={2}>

@@ -55,6 +55,7 @@ const GetHelp = ({setSearchQuery}) => {
     ambulance: false,
     medicine: false,
     beds: false,
+    icuBeds: false,
     food: false,
     others: false,
   });
@@ -64,10 +65,11 @@ const GetHelp = ({setSearchQuery}) => {
     ambulance,
     medicine,
     beds,
+    icuBeds
     food,
     others,
   } = checkBoxData;
-  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, food, others];
+  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
   const handleChange = (event) => {
     setCheckBoxData({
       ...checkBoxData,
@@ -193,6 +195,19 @@ const GetHelp = ({setSearchQuery}) => {
                   checked={beds}
                   onChange={handleChange}
                   name="beds"
+                />
+              }
+              label="Beds"
+            />
+          </Grid>
+          <Grid item xs={6} md={4} lg={2}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={icuBeds}
+                  onChange={handleChange}
+                  name="icuBeds"
                 />
               }
               label="Beds"

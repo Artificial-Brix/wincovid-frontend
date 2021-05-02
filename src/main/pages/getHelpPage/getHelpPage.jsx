@@ -53,6 +53,7 @@ const GetHelpPage = ({ searchQuery }) => {
       ambulance,
       medicine,
       beds,
+      icuBeds,
       food,
       others,
       pincode
@@ -63,6 +64,7 @@ const GetHelpPage = ({ searchQuery }) => {
     ambulance && formData.append('ambulance', ambulance);
     medicine && formData.append('medicine', medicine);
     beds && formData.append('beds', beds);
+    icuBeds && formData.append('icuBeds', icuBeds);
     food && formData.append('food', food);
     others && formData.append('others', others);
     bloodPlasma && formData.append('bloodPlasma', bloodPlasma);

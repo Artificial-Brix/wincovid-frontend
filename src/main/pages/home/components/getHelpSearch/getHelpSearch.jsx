@@ -210,7 +210,7 @@ const GetHelp = ({setSearchQuery}) => {
                   name="icuBeds"
                 />
               }
-              label="Beds"
+              label="ICU Beds"
             />
           </Grid>
           <Grid item xs={6} md={4} lg={2}>

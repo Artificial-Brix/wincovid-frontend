@@ -58,7 +58,6 @@ const Contribute = () => {
     food: false,
     others: false,
   });
-  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const [pinCode, setPinCode] = useState('');
@@ -89,15 +88,11 @@ const Contribute = () => {
   const isValidName = () => name !== '';
   const isValidPhoneNo = () => phoneNo !== '';
   const isValidAdditionalDetails = () => additionalDetails !== '';
-  const isValidEmail = () => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return email !== '' && re.test(String(email).toLowerCase());
-  };
+ 
 
   const confirmPostContribution = async () => {
     const formData = new FormData();
     formData.append('name', name);
-    formData.append('email', email);
     formData.append('phone', phoneNo);
     formData.append('pincode', pinCode);
     formData.append('additionalDetails', additionalDetails);
@@ -118,7 +113,6 @@ const Contribute = () => {
         });
         setName('');
         setAdditionalDetails('');
-        setEmail('');
         setPhoneNo('');
         setPinCode('');
         setValidationState(false);
@@ -147,7 +141,6 @@ const Contribute = () => {
     if (
       isValidName() &&
       isValidPhoneNo() &&
-      isValidEmail() &&
       isValidAdditionalDetails() &&
       values.some((value) => value === true)
     ) {
@@ -205,18 +198,7 @@ const Contribute = () => {
               error={validationState && !isValidName()}
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Email"
-              variant="outlined"
-              fullWidth
-              className={classes.inputBox}
-              helperText="Enter your valid Email address"
-              value={email}
-              onInput={(e) => setEmail(e.target.value)}
-              error={validationState && !isValidEmail()}
-            />
-          </Grid>
+         
           <Grid item xs={12}>
             <TextField
               label="Phone No"

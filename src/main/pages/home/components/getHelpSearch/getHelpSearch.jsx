@@ -158,7 +158,7 @@ const GetHelp = ({setSearchQuery}) => {
                   name="bloodPlasma"
                 />
               }
-              label="Blood Plasma"
+              label="Blood / Plasma"
             />
           </Grid>
           <Grid item xs={6} md={4} lg={2}>

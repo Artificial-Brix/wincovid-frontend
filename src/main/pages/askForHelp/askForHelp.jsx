@@ -54,6 +54,7 @@ const AskForHelp = () => {
     ambulance: false,
     medicine: false,
     beds: false,
+    icuBeds: false,
     food: false,
     others: false,
   });
@@ -63,8 +64,8 @@ const AskForHelp = () => {
   const [additionalDetails, setAdditionalDetails] = useState('');
   const [validationState, setValidationState] = useState(false);
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false)
-  const { bloodPlasma, oxygen, ambulance, medicine, beds, food, others } = checkBoxData;
-  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, food, others];
+  const { bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others } = checkBoxData;
+  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
   const handleChange = (event) => {
     setCheckBoxData({
       ...checkBoxData,
@@ -78,7 +79,7 @@ const AskForHelp = () => {
   const isValidName = () => name !== '';
   const isValidPhoneNo = () => phoneNo !== '';
   const isValidAdditionalDetails = () => additionalDetails !== '';
-  
+
   const confirmPostContribution = async () => {
     const formData = new FormData();
     formData.append('name', name);
@@ -89,6 +90,7 @@ const AskForHelp = () => {
     formData.append('ambulance', checkBoxData.ambulance);
     formData.append('medicine', checkBoxData.medicine);
     formData.append('beds', checkBoxData.beds);
+    formData.append('icuBeds', checkBoxData.icuBeds);
     formData.append('food', checkBoxData.food);
     formData.append('others', checkBoxData.others);
     formData.append('bloodPlasma', checkBoxData.bloodPlasma);
@@ -110,6 +112,7 @@ const AskForHelp = () => {
           ambulance: false,
           medicine: false,
           beds: false,
+          icuBeds: false,
           food: false,
           others: true
         })
@@ -130,7 +133,7 @@ const AskForHelp = () => {
       isValidName() &&
       isValidPhoneNo() &&
       isValidAdditionalDetails() &&
-      values.some((value)=>value===true)
+      values.some((value) => value === true)
     ) {
       await isValidPinCode(pinCode)
         .then((res) => {
@@ -164,7 +167,7 @@ const AskForHelp = () => {
               <Grid item xs={8} md={10}>
                 <h3 className={classes.heading}>Ask Help By Posting Your Needs</h3>
               </Grid>
-              <Grid item  xs={4} md={2}>
+              <Grid item xs={4} md={2}>
                 <button className={classes.button} onClick={handleCancel}>
                   Go Back
                 </button>
@@ -211,106 +214,119 @@ const AskForHelp = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl error={validationState && !values.some((value)=>value===true)}>
+            <FormControl error={validationState && !values.some((value) => value === true)}>
               <FormLabel component="legend">
-              Check the resources you need
+                Check the resources you need
             </FormLabel>
             </FormControl>
-            
-            <Grid container justify="flex-start" alignItems="center">
-          <Grid item xs={6} md={4} lg={2}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={oxygen}
-                  onChange={handleChange}
-                  name="oxygen"
-                />
-              }
-              label="Oxygen"
-            />
-          </Grid>
-          <Grid item xs={6} md={4} lg={2}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={bloodPlasma}
-                  onChange={handleChange}
-                  name="bloodPlasma"
-                />
-              }
-              label="Blood Plasma"
-            />
-          </Grid>
-          <Grid item xs={6} md={4} lg={2}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={ambulance}
-                  onChange={handleChange}
-                  name="ambulance"
-                />
-              }
-              label="Ambulance"
-            />
-          </Grid>
-          <Grid item xs={6} md={4} lg={2}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={medicine}
-                  onChange={handleChange}
-                  name="medicine"
-                />
-              }
-              label="Medicines"
-            />
-          </Grid>
-          <Grid item xs={6} md={4} lg={2}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={beds}
-                  onChange={handleChange}
-                  name="beds"
-                />
-              }
-              label="Beds"
-            />
-          </Grid>
-          <Grid item xs={6} md={4} lg={2}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={food}
-                  onChange={handleChange}
-                  name="food"
-                />
-              }
-              label="Food"
-            />
-          </Grid>
-          <Grid item xs={6} md={4} lg={2}>
 
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={others}
-                  onChange={handleChange}
-                  name="others"
+            <Grid container justify="flex-start" alignItems="center">
+              <Grid item xs={6} md={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={oxygen}
+                      onChange={handleChange}
+                      name="oxygen"
+                    />
+                  }
+                  label="Oxygen"
                 />
-              }
-              label="Others"
-            />
-          </Grid>
-        </Grid>
+              </Grid>
+              <Grid item xs={6} md={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={bloodPlasma}
+                      onChange={handleChange}
+                      name="bloodPlasma"
+                    />
+                  }
+                  label="Blood / Plasma"
+                />
+              </Grid>
+              <Grid item xs={6} md={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={ambulance}
+                      onChange={handleChange}
+                      name="ambulance"
+                    />
+                  }
+                  label="Ambulance"
+                />
+              </Grid>
+              <Grid item xs={6} md={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={medicine}
+                      onChange={handleChange}
+                      name="medicine"
+                    />
+                  }
+                  label="Medicines"
+                />
+              </Grid>
+              <Grid item xs={6} md={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={beds}
+                      onChange={handleChange}
+                      name="beds"
+                    />
+                  }
+                  label="Beds"
+                />
+              </Grid>
+              <Grid item xs={6} md={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={icuBeds}
+                      onChange={handleChange}
+                      name="icuBeds"
+                    />
+                  }
+                  label="ICU Beds"
+                />
+              </Grid>
+              <Grid item xs={6} md={4} lg={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={food}
+                      onChange={handleChange}
+                      name="food"
+                    />
+                  }
+                  label="Food"
+                />
+              </Grid>
+              <Grid item xs={6} md={4} lg={2}>
+
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={others}
+                      onChange={handleChange}
+                      name="others"
+                    />
+                  }
+                  label="Others"
+                />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <TextField

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -14,33 +14,33 @@ const useStyles = makeStyles({
     textTransform: 'capitalize',
     '@media (max-width: 600px)': {
       fontSize: '18px',
-    }
+    },
   },
   textBox: {
     border: '1.5px solid #8692A6',
     borderRadius: '6px',
     textTransform: 'capitalize',
     padding: '0 10px',
-fontWeight:'600',
+    fontWeight: '600',
     // color:'#8692A6'
   },
   subHeading: {
     color: '#8692A6',
     textTransform: 'uppercase',
-    fontWeight: '500'
+    fontWeight: '500',
   },
   items: {
-    margin: '0 10px'
+    margin: '5px',
   },
-  timeStamp:{
+  timeStamp: {
     color: '#8692A6',
-    margin: '0 15px'
-  }
-})
+    margin: '0 15px',
+  },
+});
 
 const getDate = (date) => {
   try {
-    let newDate = new Date(date).toUTCString(); 
+    let newDate = new Date(date).toUTCString();
     let arr = newDate.split(' ').slice(1, 5);
     let timeArr = arr[3].split(':').map((str) => parseInt(str));
     let AMPMstr = 'AM';
@@ -52,127 +52,199 @@ const getDate = (date) => {
       AMPMstr = 'PM';
       hour %= 12;
     }
-    let time = `${hour > 9 ? hour : '0' + hour}:${min > 9 ? min : '0' + min
-      } ${AMPMstr}`;
+    let time = `${hour > 9 ? hour : '0' + hour}:${
+      min > 9 ? min : '0' + min
+    } ${AMPMstr}`;
     return `${dayStr + ' ' + time}`;
-  } catch (err) {
-
-  }
-
+  } catch (err) {}
 };
-
 
 const HelpUsDialog = ({ open, handleClose, data }) => {
   const { innerWidth: width } = window;
   const classes = useStyles();
-  const { bloodPlasma, oxygen, ambulance, medicine, beds, food, others } = data;
-  const keys = ['bloodPlasma', 'oxygen', 'ambulance', 'medicine', 'beds', 'food', 'others'];
-  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, food, others];
+  const {
+    aPositive,
+    aNegative,
+    bPositive,
+    bNegative,
+    abPositive,
+    abNegative,
+    oPositive,
+    oNegative,
+    oxygenCylinder,
+    oxygenRefiling,
+    covidAmbulance,
+    nonCovidAmbulance,
+    covidMedicine,
+    nonCovidMedicine,
+    covidBeds,
+    nonCovidBeds,
+    covidICUBeds,
+    nonCovidICUBeds,
+    food,
+    others,
+    pincode,
+  } = data;
+  const keys = [
+    'aPositive',
+    'aNegative',
+    'bPositive',
+    'bNegative',
+    'abPositive',
+    'abNegative',
+    'oPositive',
+    'oNegative',
+    'oxygenCylinder',
+    'oxygenRefiling',
+    'covidAmbulance',
+    'nonCovidAmbulance',
+    'covidMedicine',
+    'nonCovidMedicine',
+    'covidBeds',
+    'nonCovidBeds',
+    'covidICUBeds',
+    'nonCovidICUBeds',
+    'food',
+    'others',
+  ];
+  const values = [
+    aPositive,
+    aNegative,
+    bPositive,
+    bNegative,
+    abPositive,
+    abNegative,
+    oPositive,
+    oNegative,
+    oxygenCylinder,
+    oxygenRefiling,
+    covidAmbulance,
+    nonCovidAmbulance,
+    covidMedicine,
+    nonCovidMedicine,
+    covidBeds,
+    nonCovidBeds,
+    covidICUBeds,
+    nonCovidICUBeds,
+    food,
+    others,
+    pincode,
+  ];
   return (
-    <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} maxWidth='md' fullWidth={true}
-      fullScreen={width <= 600 && true}>
+    <Dialog
+      onClose={handleClose}
+      aria-labelledby="customized-dialog-title"
+      open={open}
+      maxWidth="md"
+      fullWidth={true}
+      fullScreen={width <= 600 && true}
+    >
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        <h3 className={classes.heading}>{data.name} - {data.district} - {data.pincode}</h3>
-
+        <h3 className={classes.heading}>
+          {data.name} - {data.district} - {data.pincode}
+        </h3>
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Grid container justify='center' alignItems='center'>
+            <Grid container justify="center" alignItems="center">
               <Grid item xs={4} md={3} className={classes.subHeading}>
                 <p>NAME</p>
               </Grid>
               <Grid item xs={8} md={6} className={classes.textBox}>
-                <p >{data.name}</p>
+                <p>{data.name}</p>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify='center' alignItems='center'>
+            <Grid container justify="center" alignItems="center">
               <Grid item xs={4} md={3} className={classes.subHeading}>
                 <p>district</p>
               </Grid>
               <Grid item xs={8} md={6} className={classes.textBox}>
-                <p >{data.district}</p>
+                <p>{data.district}</p>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify='center' alignItems='center'>
+            <Grid container justify="center" alignItems="center">
               <Grid item xs={4} md={3} className={classes.subHeading}>
                 <p>state</p>
               </Grid>
               <Grid item xs={8} md={6} className={classes.textBox}>
-                <p >{data.state}</p>
+                <p>{data.state}</p>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify='center' alignItems='center'>
+            <Grid container justify="center" alignItems="center">
               <Grid item xs={4} md={3} className={classes.subHeading}>
                 <p>phone no</p>
               </Grid>
               <Grid item xs={8} md={6} className={classes.textBox}>
-                <p >{data.phone}</p>
+                <p>{data.phone}</p>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify='center' alignItems='center'>
+            <Grid container justify="center" alignItems="center">
               <Grid item xs={4} md={3} className={classes.subHeading}>
                 <p>needs</p>
               </Grid>
               <Grid item xs={8} md={6}>
-                <Grid container justify='flex-start' alignItems='center'>
+                <Grid container justify="flex-start" alignItems="center">
                   {keys.map((key, index) => {
                     if (values[index] === true) {
                       return (
-                        <Grid item className={`${classes.textBox} ${classes.items}`}>
+                        <Grid
+                          item
+                          className={`${classes.textBox} ${classes.items}`}
+                        >
                           <p>{keys[index]}</p>
                         </Grid>
-                      )
+                      );
                     }
-                    return <></>
+                    return <></>;
                   })}
                   {values.every((value) => value === false) && (
                     <Grid className={classes.textBox}>
-
-                      <p style={{margin:"10px 0"}}>others</p>
-                    </Grid>)}
-
+                      <p style={{ margin: '10px 0' }}>others</p>
+                    </Grid>
+                  )}
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify='center' alignItems='center'>
+            <Grid container justify="center" alignItems="center">
               <Grid item xs={4} md={3} className={classes.subHeading}>
                 <p>additional details</p>
               </Grid>
               <Grid item xs={8} md={6} className={classes.textBox}>
-                <p >{data.additionalDetails}</p>
+                <p>{data.additionalDetails}</p>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container justify='space-between' alignItems='center'>
-          <Grid item >
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>
             <div>
-            <code className={classes.timeStamp}>{
-              getDate(data.createdOn)
-            }</code>
-          </div></Grid>
-          <Grid item ><Button autoFocus onClick={handleClose} color="secondary">
-            close
-          </Button></Grid>
+              <code className={classes.timeStamp}>
+                {getDate(data.createdOn)}
+              </code>
+            </div>
+          </Grid>
+          <Grid item>
+            <Button autoFocus onClick={handleClose} color="secondary">
+              close
+            </Button>
+          </Grid>
         </Grid>
-
-
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+};
 
-export default HelpUsDialog
+export default HelpUsDialog;

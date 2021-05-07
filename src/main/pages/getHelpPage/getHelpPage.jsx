@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { searchContributionPost } from './../../services/contribute-api'
-import SearchPost from './searchPost/searchPost'
+import { searchContributionPost } from './../../services/contribute-api';
+import SearchPost from './searchPost/searchPost';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -26,21 +26,21 @@ const useStyles = makeStyles({
 });
 
 const GetHelpPage = ({ searchQuery }) => {
-  const [searchData, setSearchData] = useState([])
+  const [searchData, setSearchData] = useState([]);
   const history = useHistory();
 
   const fetchContributionPost = async (formData) => {
     try {
-      const res = await searchContributionPost(formData)
+      const res = await searchContributionPost(formData);
       if (res.status === 200) {
-        setSearchData(res.data.ResponseData)
-        console.log(res.data.ResponseData)
+        setSearchData(res.data.ResponseData);
+        console.log(res.data.ResponseData);
       }
     } catch (error) {
-      setSearchData([])
-      console.log(error)
+      setSearchData([]);
+      console.log(error);
     }
-  }
+  };
 
   const handleCancel = () => {
     history.push('/');
@@ -48,28 +48,54 @@ const GetHelpPage = ({ searchQuery }) => {
 
   useEffect(() => {
     const {
-      bloodPlasma,
-      oxygen,
-      ambulance,
-      medicine,
-      beds,
-      icuBeds,
+      aPositive,
+      aNegative,
+      bPositive,
+      bNegative,
+      abPositive,
+      abNegative,
+      oPositive,
+      oNegative,
+      oxygenCylinder,
+      oxygenRefiling,
+      covidAmbulance,
+      nonCovidAmbulance,
+      covidMedicine,
+      nonCovidMedicine,
+      covidBeds,
+      nonCovidBeds,
+      covidICUBeds,
+      nonCovidICUBeds,
       food,
       others,
       pincode
     } = searchQuery;
     const formData = new FormData();
     formData.append('pincode', +pincode);
-    oxygen && formData.append('oxygen', oxygen);
-    ambulance && formData.append('ambulance', ambulance);
-    medicine && formData.append('medicine', medicine);
-    beds && formData.append('beds', beds);
-    icuBeds && formData.append('icuBeds', icuBeds);
     food && formData.append('food', food);
     others && formData.append('others', others);
-    bloodPlasma && formData.append('bloodPlasma', bloodPlasma);
-    fetchContributionPost(formData)
-    return () => { };
+    aPositive && formData.append('aPositive',aPositive)
+    bPositive && formData.append('bPositive',bPositive)
+    aNegative && formData.append('aNegative',aNegative)
+    bNegative && formData.append('bNegative',bNegative)
+    abPositive && formData.append('abPositive',abPositive)
+    abNegative && formData.append('abNegative',abNegative)
+    oPositive && formData.append('oPositive',oPositive)
+    oNegative && formData.append('oNegative',oNegative)
+    oxygenCylinder && formData.append('oxygenCylinder',oxygenCylinder)
+    oxygenRefiling && formData.append('oxygenRefiling',oxygenRefiling)
+    covidAmbulance && formData.append('covidAmbulance',covidAmbulance)
+    nonCovidAmbulance && formData.append('nonCovidAmbulance',nonCovidAmbulance)
+    covidMedicine && formData.append('covidMedicine',covidMedicine)
+    nonCovidMedicine && formData.append('nonCovidMedicine',nonCovidMedicine)
+    covidBeds && formData.append('covidBeds',covidBeds)
+    nonCovidBeds && formData.append('nonCovidBeds',nonCovidBeds)
+    covidICUBeds && formData.append('covidICUBeds',covidICUBeds)
+    nonCovidICUBeds && formData.append('nonCovidICUBeds',nonCovidICUBeds)
+
+    fetchContributionPost(formData);
+
+    return () => {};
   }, [searchQuery]);
 
   const classes = useStyles();
@@ -77,7 +103,7 @@ const GetHelpPage = ({ searchQuery }) => {
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12} md={11} style={{ minHeight: '100vh' }}>
-        <Grid container justify="center" alignItems="center" >
+        <Grid container justify="center" alignItems="center">
           <Grid item xs={12}>
             <Grid
               container

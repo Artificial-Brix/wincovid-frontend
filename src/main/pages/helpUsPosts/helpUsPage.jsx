@@ -46,7 +46,7 @@ const HelpUsPage = (props) => {
                             spacing={2}
                         >
                             <Grid item xs={4}>
-                                <h3 className={classes.heading}>Help Us!</h3>
+                                <h3 className={classes.heading}>Need Help</h3>
                             </Grid>
                             <Grid item xs={4} md={2}>
                                 <button className={classes.button} onClick={handleCancel}>

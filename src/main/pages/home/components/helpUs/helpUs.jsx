@@ -56,10 +56,7 @@ const HelpUs = ({getHelpPosts}) => {
     return (
         <Grid>
             <Grid item xs={12}>
-                <Grid container justify='space-between' alignItems='center'>
-                    <Grid item>
-                        <h3 className={classes.heading}>Help Us!</h3>
-                    </Grid>
+                <Grid container justify='center' alignItems='center'>
                     <Grid item>
                         <button className={classes.button} onClick={handelClickAskHelpPost}>
                             <Grid container justify='center' alignItems='center' spacing={1}>

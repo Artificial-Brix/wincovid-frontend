@@ -5,10 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import isValidPinCode from './../../../util/validatePinCode'
+import isValidPinCode from './../../../util/validatePinCode';
 import { useToasts } from 'react-toast-notifications';
 import FormControl from '@material-ui/core/FormControl';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { MenuItem, Select } from '@material-ui/core';
 const useStyles = makeStyles({
   heading: {
     fontSize: '24px',
@@ -43,7 +44,7 @@ const useStyles = makeStyles({
   },
 });
 
-const GetHelp = ({setSearchQuery}) => {
+const GetHelp = ({ setSearchQuery }) => {
   const { addToast } = useToasts();
   const history = useHistory();
   const classes = useStyles();
@@ -59,6 +60,33 @@ const GetHelp = ({setSearchQuery}) => {
     food: false,
     others: false,
   });
+
+  const [selectData, setSelectData] = useState({
+    bloodPlasmaSelect:
+      'aPositive' ||
+      'aNegative' ||
+      'bPositive' ||
+      'bNegative' ||
+      'oPositive' ||
+      'oNegative' ||
+      'abPositive' ||
+      'abNegative',
+    oxygenSelect: 'oxygenCylinder' || 'oxygenRefiling',
+    ambulanceSelect: 'covidAmbulance' || 'nonCovidAmbulance',
+    bedsSelect: 'covidBeds' || 'nonCovidBeds',
+    icuBedsSelect: 'covidICUBeds' || 'nonCovidICUBeds',
+    medicineSelect: 'covidMedicine' || 'nonCovidMedicine',
+  });
+
+  const {
+    bloodPlasmaSelect,
+    oxygenSelect,
+    ambulanceSelect,
+    bedsSelect,
+    icuBedsSelect,
+    medicineSelect,
+  } = selectData;
+
   const {
     bloodPlasma,
     oxygen,
@@ -69,7 +97,51 @@ const GetHelp = ({setSearchQuery}) => {
     food,
     others,
   } = checkBoxData;
-  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
+
+  const values = [
+    bloodPlasma,
+    oxygen,
+    ambulance,
+    medicine,
+    beds,
+    icuBeds,
+    food,
+    others,
+  ];
+
+  const getQueryData = () => {
+    const queryData = {};
+    if (food) {
+      queryData['food'] = food;
+    }
+    if (others) {
+      queryData['others'] = others;
+    }
+    if (oxygen) {
+      queryData[oxygenSelect] = true;
+    }
+    if (bloodPlasma) {
+      queryData[bloodPlasmaSelect] = true;
+    }
+    if (ambulance) {
+      queryData[ambulanceSelect] = true;
+    }
+    if (medicine) {
+      queryData[medicineSelect] = true;
+    }
+    if (beds) {
+      queryData[bedsSelect] = true;
+    }
+    if (icuBeds) {
+      queryData[icuBedsSelect] = true;
+    }
+    return queryData;
+  };
+
+  const handleSelectChange = (e) => {
+    setSelectData({ ...selectData, [e.target.name]: e.target.value });
+  };
+
   const handleChange = (event) => {
     setCheckBoxData({
       ...checkBoxData,
@@ -77,16 +149,17 @@ const GetHelp = ({setSearchQuery}) => {
     });
   };
 
-  const handleClickSearch = async()=>{
+  const handleClickSearch = async () => {
     setValidationState(true);
-    if(pinCode.length === 6 && values.some((value)=>value===true)){
-       await isValidPinCode(pinCode)
+    console.log(getQueryData());
+    if (pinCode.length === 6 && values.some((value) => value === true)) {
+      await isValidPinCode(pinCode)
         .then((res) => {
           if (res) {
             setSearchQuery({
-              pincode:pinCode,
-              ...checkBoxData
-            })
+              pincode: pinCode,
+              ...getQueryData(),
+            });
             history.push('/get-help');
           } else {
             addToast('Invalid Pincode', {
@@ -104,8 +177,7 @@ const GetHelp = ({setSearchQuery}) => {
           });
         });
     }
-   
-  }
+  };
 
   return (
     <Grid container alignItems="center" justify="center">
@@ -113,7 +185,9 @@ const GetHelp = ({setSearchQuery}) => {
         <h3 className={classes.heading}>Get Help</h3>
       </Grid>
       <Grid item xs={12}>
-        <FormLabel className={classes.text}>Please Enter these necessary details</FormLabel>
+        <FormLabel className={classes.text}>
+          Please Enter these necessary details
+        </FormLabel>
       </Grid>
       <Grid item xs={12}>
         <TextField
@@ -123,17 +197,18 @@ const GetHelp = ({setSearchQuery}) => {
           className={classes.inputBox}
           value={pinCode}
           onInput={(e) => setPinCode(e.target.value)}
-          helperText='Enter your pincode'
+          helperText="Enter your pincode"
           error={validationState && pinCode.length !== 6}
         />
       </Grid>
       <Grid item xs={12}>
-      <FormControl error={validationState && !values.some((value)=>value===true)}>
-
-        <FormLabel className={classes.text}>
-          Check minimum one resources you need
-        </FormLabel>
-      </FormControl>
+        <FormControl
+          error={validationState && !values.some((value) => value === true)}
+        >
+          <FormLabel className={classes.text}>
+            Check minimum one resources you need
+          </FormLabel>
+        </FormControl>
         <Grid container justify="flex-start" alignItems="center">
           <Grid item xs={6} md={4} lg={2}>
             <FormControlLabel
@@ -147,6 +222,17 @@ const GetHelp = ({setSearchQuery}) => {
               }
               label="Oxygen"
             />
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={oxygenSelect}
+              name="oxygenSelect"
+              onChange={handleSelectChange}
+              disabled={!oxygen}
+            >
+              <MenuItem value="oxygenCylinder">cylinder</MenuItem>
+              <MenuItem value="oxygenRefiling">refiling </MenuItem>
+            </Select>
           </Grid>
           <Grid item xs={6} md={4} lg={2}>
             <FormControlLabel
@@ -160,6 +246,23 @@ const GetHelp = ({setSearchQuery}) => {
               }
               label="Blood / Plasma"
             />
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={bloodPlasmaSelect}
+              name="bloodPlasmaSelect"
+              onChange={handleSelectChange}
+              disabled={!bloodPlasma}
+            >
+              <MenuItem value="oPositive">O+</MenuItem>
+              <MenuItem value="oNegative">O- </MenuItem>
+              <MenuItem value="aPositive">A+</MenuItem>
+              <MenuItem value="aNegative">A- </MenuItem>
+              <MenuItem value="bPositive">B+</MenuItem>
+              <MenuItem value="bNegative">B- </MenuItem>
+              <MenuItem value="abPositive">AB+</MenuItem>
+              <MenuItem value="abNegative">AB- </MenuItem>
+            </Select>
           </Grid>
           <Grid item xs={6} md={4} lg={2}>
             <FormControlLabel
@@ -173,6 +276,17 @@ const GetHelp = ({setSearchQuery}) => {
               }
               label="Ambulance"
             />
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={ambulanceSelect}
+              onChange={handleSelectChange}
+              name="ambulanceSelect"
+              disabled={!ambulance}
+            >
+              <MenuItem value="covidAmbulance">covid</MenuItem>
+              <MenuItem value="nonCovidAmbulance">non covid</MenuItem>
+            </Select>
           </Grid>
           <Grid item xs={6} md={4} lg={2}>
             <FormControlLabel
@@ -186,6 +300,17 @@ const GetHelp = ({setSearchQuery}) => {
               }
               label="Medicines"
             />
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={medicineSelect}
+              onChange={handleSelectChange}
+              name="medicineSelect"
+              disabled={!medicine}
+            >
+              <MenuItem value="covidMedicine">covid</MenuItem>
+              <MenuItem value="nonCovidMedicine">non covid</MenuItem>
+            </Select>
           </Grid>
           <Grid item xs={6} md={4} lg={2}>
             <FormControlLabel
@@ -199,6 +324,17 @@ const GetHelp = ({setSearchQuery}) => {
               }
               label="Beds"
             />
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={bedsSelect}
+              onChange={handleSelectChange}
+              name="bedsSelect"
+              disabled={!beds}
+            >
+              <MenuItem value="covidBeds">covid</MenuItem>
+              <MenuItem value="nonCovidBeds">non covid</MenuItem>
+            </Select>
           </Grid>
           <Grid item xs={6} md={4} lg={2}>
             <FormControlLabel
@@ -212,6 +348,17 @@ const GetHelp = ({setSearchQuery}) => {
               }
               label="ICU Beds"
             />
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={icuBedsSelect}
+              onChange={handleSelectChange}
+              name="icuBedsSelect"
+              disabled={!icuBeds}
+            >
+              <MenuItem value="covidICUBeds">covid</MenuItem>
+              <MenuItem value="nonCovidICUBeds">non covid</MenuItem>
+            </Select>
           </Grid>
           <Grid item xs={6} md={4} lg={2}>
             <FormControlLabel
@@ -242,7 +389,9 @@ const GetHelp = ({setSearchQuery}) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <button className={classes.searchButton} onClick={handleClickSearch}>SEARCH</button>
+        <button className={classes.searchButton} onClick={handleClickSearch}>
+          SEARCH
+        </button>
       </Grid>
     </Grid>
   );

@@ -61,23 +61,31 @@ const GetHelp = ({ setSearchQuery }) => {
     others: false,
   });
 
-const [selectData, setSelectData] = useState({
-  bloodPlasmaSelect:'aPositive' || '  aNegative' || 'bPositive' || 'bNegative' || 'oPositive' || 'oNegative'|| 'abPositive' || 'abNegative',
-  oxygenSelect:'oxygenCylinder' || 'oxygenRefiling',
-  ambulanceSelect:'covidAmbulance' || 'nonCovidAmbulance',
-  bedsSelect:'covidBeds' || 'nonCovidBeds',
-  icuBedsSelect:'covidICUBeds' || 'nonCovidICUBeds',
-  medicineSelect:'covidMedicine' || 'nonCovidMedicine'
-})
+  const [selectData, setSelectData] = useState({
+    bloodPlasmaSelect:
+      'aPositive' ||
+      'aNegative' ||
+      'bPositive' ||
+      'bNegative' ||
+      'oPositive' ||
+      'oNegative' ||
+      'abPositive' ||
+      'abNegative',
+    oxygenSelect: 'oxygenCylinder' || 'oxygenRefiling',
+    ambulanceSelect: 'covidAmbulance' || 'nonCovidAmbulance',
+    bedsSelect: 'covidBeds' || 'nonCovidBeds',
+    icuBedsSelect: 'covidICUBeds' || 'nonCovidICUBeds',
+    medicineSelect: 'covidMedicine' || 'nonCovidMedicine',
+  });
 
-const {
-  bloodPlasmaSelect,
-  oxygenSelect,
-  ambulanceSelect,
-  bedsSelect,
-  icuBedsSelect,
-  medicineSelect
-} = selectData;
+  const {
+    bloodPlasmaSelect,
+    oxygenSelect,
+    ambulanceSelect,
+    bedsSelect,
+    icuBedsSelect,
+    medicineSelect,
+  } = selectData;
 
   const {
     bloodPlasma,
@@ -101,54 +109,49 @@ const {
     others,
   ];
 
-  const getQueryData = () =>{
-    const queryData = {}
-    if(food){
-      queryData["food"] = food
+  const getQueryData = () => {
+    const queryData = {};
+    if (food) {
+      queryData['food'] = food;
     }
-    if(others){
-      queryData["others"] = others
+    if (others) {
+      queryData['others'] = others;
     }
-    if(oxygen){
-      queryData[oxygenSelect] = true
+    if (oxygen) {
+      queryData[oxygenSelect] = true;
     }
-    if(bloodPlasma){
-      queryData[bloodPlasmaSelect] = true
+    if (bloodPlasma) {
+      queryData[bloodPlasmaSelect] = true;
     }
-    if(ambulance){
-      queryData[ambulanceSelect] = true
+    if (ambulance) {
+      queryData[ambulanceSelect] = true;
     }
-    if(medicine){
-      queryData[medicineSelect] = true
+    if (medicine) {
+      queryData[medicineSelect] = true;
     }
-    if(beds){
-      queryData[bedsSelect] = true
+    if (beds) {
+      queryData[bedsSelect] = true;
     }
-    if(icuBeds){
-      queryData[icuBedsSelect] = true
+    if (icuBeds) {
+      queryData[icuBedsSelect] = true;
     }
-return queryData
-}
+    return queryData;
+  };
 
-const handleSelectChange = (e)=>{
-  
-  setSelectData({...selectData,[e.target.name]:e.target.value})
-}
-
+  const handleSelectChange = (e) => {
+    setSelectData({ ...selectData, [e.target.name]: e.target.value });
+  };
 
   const handleChange = (event) => {
-    
     setCheckBoxData({
       ...checkBoxData,
       [event.target.name]: event.target.checked,
     });
-    
   };
-
 
   const handleClickSearch = async () => {
     setValidationState(true);
-    console.log(getQueryData())
+    console.log(getQueryData());
     if (pinCode.length === 6 && values.some((value) => value === true)) {
       await isValidPinCode(pinCode)
         .then((res) => {
@@ -223,8 +226,9 @@ const handleSelectChange = (e)=>{
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={oxygenSelect}
-              name='oxygenSelect'
+              name="oxygenSelect"
               onChange={handleSelectChange}
+              disabled={!oxygen}
             >
               <MenuItem value="oxygenCylinder">cylinder</MenuItem>
               <MenuItem value="oxygenRefiling">refiling </MenuItem>
@@ -246,8 +250,9 @@ const handleSelectChange = (e)=>{
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={bloodPlasmaSelect}
-              name='bloodPlasmaSelect'
+              name="bloodPlasmaSelect"
               onChange={handleSelectChange}
+              disabled={!bloodPlasma}
             >
               <MenuItem value="oPositive">O+</MenuItem>
               <MenuItem value="oNegative">O- </MenuItem>
@@ -276,7 +281,8 @@ const handleSelectChange = (e)=>{
               id="demo-simple-select"
               value={ambulanceSelect}
               onChange={handleSelectChange}
-              name='ambulanceSelect'
+              name="ambulanceSelect"
+              disabled={!ambulance}
             >
               <MenuItem value="covidAmbulance">covid</MenuItem>
               <MenuItem value="nonCovidAmbulance">non covid</MenuItem>
@@ -299,7 +305,8 @@ const handleSelectChange = (e)=>{
               id="demo-simple-select"
               value={medicineSelect}
               onChange={handleSelectChange}
-              name='medicineSelect'
+              name="medicineSelect"
+              disabled={!medicine}
             >
               <MenuItem value="covidMedicine">covid</MenuItem>
               <MenuItem value="nonCovidMedicine">non covid</MenuItem>
@@ -322,7 +329,8 @@ const handleSelectChange = (e)=>{
               id="demo-simple-select"
               value={bedsSelect}
               onChange={handleSelectChange}
-              name='bedsSelect'
+              name="bedsSelect"
+              disabled={!beds}
             >
               <MenuItem value="covidBeds">covid</MenuItem>
               <MenuItem value="nonCovidBeds">non covid</MenuItem>
@@ -345,7 +353,8 @@ const handleSelectChange = (e)=>{
               id="demo-simple-select"
               value={icuBedsSelect}
               onChange={handleSelectChange}
-              name='icuBedsSelect'
+              name="icuBedsSelect"
+              disabled={!icuBeds}
             >
               <MenuItem value="covidICUBeds">covid</MenuItem>
               <MenuItem value="nonCovidICUBeds">non covid</MenuItem>

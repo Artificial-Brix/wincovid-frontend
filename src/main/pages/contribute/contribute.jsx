@@ -11,6 +11,7 @@ import { postContribution } from './../../services/contribute-api';
 import AlertDialog from '../../components/AlertDialog/AlertDialog';
 import { useToasts } from 'react-toast-notifications';
 import FormControl from '@material-ui/core/FormControl';
+import { MenuItem, Select } from '@material-ui/core';
 const useStyles = makeStyles({
   heading: {
     fontSize: '28px',
@@ -58,12 +59,6 @@ const Contribute = () => {
     food: false,
     others: false,
   });
-  const [name, setName] = useState('');
-  const [phoneNo, setPhoneNo] = useState('');
-  const [pinCode, setPinCode] = useState('');
-  const [additionalDetails, setAdditionalDetails] = useState('');
-  const [validationState, setValidationState] = useState(false);
-  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
   const {
     bloodPlasma,
     oxygen,
@@ -74,13 +69,89 @@ const Contribute = () => {
     food,
     others,
   } = checkBoxData;
-  const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
+  const values = [
+    bloodPlasma,
+    oxygen,
+    ambulance,
+    medicine,
+    beds,
+    icuBeds,
+    food,
+    others,
+  ];
+  const [selectData, setSelectData] = useState({
+    bloodPlasmaSelect:
+      'aPositive' ||
+      'aNegative' ||
+      'bPositive' ||
+      'bNegative' ||
+      'oPositive' ||
+      'oNegative' ||
+      'abPositive' ||
+      'abNegative',
+    oxygenSelect: 'oxygenCylinder' || 'oxygenRefiling',
+    ambulanceSelect: 'covidAmbulance' || 'nonCovidAmbulance',
+    bedsSelect: 'covidBeds' || 'nonCovidBeds',
+    icuBedsSelect: 'covidICUBeds' || 'nonCovidICUBeds',
+    medicineSelect: 'covidMedicine' || 'nonCovidMedicine',
+  });
+
+  const {
+    bloodPlasmaSelect,
+    oxygenSelect,
+    ambulanceSelect,
+    bedsSelect,
+    icuBedsSelect,
+    medicineSelect,
+  } = selectData;
+
+  const [name, setName] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [pinCode, setPinCode] = useState('');
+  const [additionalDetails, setAdditionalDetails] = useState('');
+  const [validationState, setValidationState] = useState(false);
+  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
+
   const handleChange = (event) => {
     setCheckBoxData({
       ...checkBoxData,
       [event.target.name]: event.target.checked,
     });
   };
+
+  const handleSelectChange = (e) => {
+    setSelectData({ ...selectData, [e.target.name]: e.target.value });
+  };
+
+  const getQueryData = () => {
+    const queryData = {};
+    if (food) {
+      queryData['food'] = food;
+    }
+    if (others) {
+      queryData['others'] = others;
+    }
+    if (oxygen) {
+      queryData[oxygenSelect] = true;
+    }
+    if (bloodPlasma) {
+      queryData[bloodPlasmaSelect] = true;
+    }
+    if (ambulance) {
+      queryData[ambulanceSelect] = true;
+    }
+    if (medicine) {
+      queryData[medicineSelect] = true;
+    }
+    if (beds) {
+      queryData[bedsSelect] = true;
+    }
+    if (icuBeds) {
+      queryData[icuBedsSelect] = true;
+    }
+    return queryData;
+  };
+
   const handleCancel = () => {
     history.push('/');
   };
@@ -88,22 +159,56 @@ const Contribute = () => {
   const isValidName = () => name !== '';
   const isValidPhoneNo = () => phoneNo !== '';
   const isValidAdditionalDetails = () => additionalDetails !== '';
- 
 
   const confirmPostContribution = async () => {
+    const {
+      aPositive,
+      aNegative,
+      bPositive,
+      bNegative,
+      abPositive,
+      abNegative,
+      oPositive,
+      oNegative,
+      oxygenCylinder,
+      oxygenRefiling,
+      covidAmbulance,
+      nonCovidAmbulance,
+      covidMedicine,
+      nonCovidMedicine,
+      covidBeds,
+      nonCovidBeds,
+      covidICUBeds,
+      nonCovidICUBeds,
+      food,
+      others,
+    } = getQueryData();
+    console.log(getQueryData());
     const formData = new FormData();
+    formData.append('pincode', pinCode);
     formData.append('name', name);
     formData.append('phone', phoneNo);
-    formData.append('pincode', pinCode);
     formData.append('additionalDetails', additionalDetails);
-    formData.append('oxygen', checkBoxData.oxygen);
-    formData.append('ambulance', checkBoxData.ambulance);
-    formData.append('medicine', checkBoxData.medicine);
-    formData.append('beds', checkBoxData.beds);
-    formData.append('icuBeds', checkBoxData.icuBeds);
-    formData.append('food', checkBoxData.food);
-    formData.append('others', checkBoxData.others);
-    formData.append('bloodPlasma', checkBoxData.bloodPlasma);
+    formData.append('food', !!food);
+    formData.append('others', !!others);
+    formData.append('aPositive', !!aPositive);
+    formData.append('bPositive', !!bPositive);
+    formData.append('aNegative', !!aNegative);
+    formData.append('bNegative', !!bNegative);
+    formData.append('abPositive', !!abPositive);
+    formData.append('abNegative', !!abNegative);
+    formData.append('oPositive', !!oPositive);
+    formData.append('oNegative', !!oNegative);
+    formData.append('oxygenCylinder', !!oxygenCylinder);
+    formData.append('oxygenRefiling', !!oxygenRefiling);
+    formData.append('covidAmbulance', !!covidAmbulance);
+    formData.append('nonCovidAmbulance', !!nonCovidAmbulance);
+    formData.append('covidMedicine', !!covidMedicine);
+    formData.append('nonCovidMedicine', !!nonCovidMedicine);
+    formData.append('covidBeds', !!covidBeds);
+    formData.append('nonCovidBeds', !!nonCovidBeds);
+    formData.append('covidICUBeds', !!covidICUBeds);
+    formData.append('nonCovidICUBeds', !!nonCovidICUBeds);
     try {
       const res = await postContribution(formData);
       if (res.status === 200) {
@@ -116,6 +221,14 @@ const Contribute = () => {
         setPhoneNo('');
         setPinCode('');
         setValidationState(false);
+        setSelectData({
+          bloodPlasmaSelect: 'aPositive',
+          oxygenSelect: 'oxygenCylinder',
+          ambulanceSelect: 'covidAmbulance',
+          bedsSelect: 'covidBeds',
+          icuBedsSelect: 'covidICUBeds',
+          medicineSelect: 'covidMedicine',
+        });
         setCheckBoxData({
           bloodPlasma: false,
           oxygen: false,
@@ -184,7 +297,9 @@ const Contribute = () => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <FormLabel className={classes.text}>Please Enter these necessary details</FormLabel>
+            <FormLabel className={classes.text}>
+              Please Enter these necessary details
+            </FormLabel>
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -198,7 +313,7 @@ const Contribute = () => {
               error={validationState && !isValidName()}
             />
           </Grid>
-         
+
           <Grid item xs={12}>
             <TextField
               label="Phone No"
@@ -224,10 +339,12 @@ const Contribute = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl error={validationState && !values.some((value) => value === true)}>
+            <FormControl
+              error={validationState && !values.some((value) => value === true)}
+            >
               <FormLabel component="legend">
                 Check the resources you have
-            </FormLabel>
+              </FormLabel>
             </FormControl>
 
             <Grid container justify="flex-start" alignItems="center">
@@ -243,6 +360,17 @@ const Contribute = () => {
                   }
                   label="Oxygen"
                 />
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={oxygenSelect}
+                  name="oxygenSelect"
+                  onChange={handleSelectChange}
+                  disabled={!oxygen}
+                >
+                  <MenuItem value="oxygenCylinder">cylinder</MenuItem>
+                  <MenuItem value="oxygenRefiling">refiling </MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6} md={4} lg={2}>
                 <FormControlLabel
@@ -256,6 +384,23 @@ const Contribute = () => {
                   }
                   label="Blood / Plasma"
                 />
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={bloodPlasmaSelect}
+                  name="bloodPlasmaSelect"
+                  onChange={handleSelectChange}
+                  disabled={!bloodPlasma}
+                >
+                  <MenuItem value="oPositive">O+</MenuItem>
+                  <MenuItem value="oNegative">O- </MenuItem>
+                  <MenuItem value="aPositive">A+</MenuItem>
+                  <MenuItem value="aNegative">A- </MenuItem>
+                  <MenuItem value="bPositive">B+</MenuItem>
+                  <MenuItem value="bNegative">B- </MenuItem>
+                  <MenuItem value="abPositive">AB+</MenuItem>
+                  <MenuItem value="abNegative">AB- </MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6} md={4} lg={2}>
                 <FormControlLabel
@@ -269,6 +414,17 @@ const Contribute = () => {
                   }
                   label="Ambulance"
                 />
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={ambulanceSelect}
+                  onChange={handleSelectChange}
+                  name="ambulanceSelect"
+                  disabled={!ambulance}
+                >
+                  <MenuItem value="covidAmbulance">covid</MenuItem>
+                  <MenuItem value="nonCovidAmbulance">non covid</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6} md={4} lg={2}>
                 <FormControlLabel
@@ -282,6 +438,17 @@ const Contribute = () => {
                   }
                   label="Medicines"
                 />
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={medicineSelect}
+                  onChange={handleSelectChange}
+                  name="medicineSelect"
+                  disabled={!medicine}
+                >
+                  <MenuItem value="covidMedicine">covid</MenuItem>
+                  <MenuItem value="nonCovidMedicine">non covid</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6} md={4} lg={2}>
                 <FormControlLabel
@@ -295,6 +462,17 @@ const Contribute = () => {
                   }
                   label="Beds"
                 />
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={bedsSelect}
+                  onChange={handleSelectChange}
+                  name="bedsSelect"
+                  disabled={!beds}
+                >
+                  <MenuItem value="covidBeds">covid</MenuItem>
+                  <MenuItem value="nonCovidBeds">non covid</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6} md={4} lg={2}>
                 <FormControlLabel
@@ -308,6 +486,17 @@ const Contribute = () => {
                   }
                   label="ICU Beds"
                 />
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={icuBedsSelect}
+                  onChange={handleSelectChange}
+                  name="icuBedsSelect"
+                  disabled={!icuBeds}
+                >
+                  <MenuItem value="covidICUBeds">covid</MenuItem>
+                  <MenuItem value="nonCovidICUBeds">non covid</MenuItem>
+                </Select>
               </Grid>
               <Grid item xs={6} md={4} lg={2}>
                 <FormControlLabel

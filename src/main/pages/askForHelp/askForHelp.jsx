@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
 });
-const AskForHelp = () => {
+const AskForHelp = ({ fetchGetHelpPost }) => {
   const { addToast } = useToasts();
   const history = useHistory();
   const classes = useStyles();
@@ -238,6 +238,8 @@ const AskForHelp = () => {
           food: false,
           others: false,
         });
+        history.push('/');
+        fetchGetHelpPost();
       }
     } catch (error) {
       addToast('Can not post try again later', {
@@ -297,7 +299,7 @@ const AskForHelp = () => {
           </Grid>
           <Grid item xs={12}>
             <FormLabel className={classes.text}>
-            Please Enter these necessary details
+              Please Enter these necessary details
             </FormLabel>
           </Grid>
           <Grid item xs={12}>

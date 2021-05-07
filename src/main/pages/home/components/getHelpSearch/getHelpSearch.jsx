@@ -79,9 +79,6 @@ const {
   medicineSelect
 } = selectData;
 
-
-
-
   const {
     bloodPlasma,
     oxygen,

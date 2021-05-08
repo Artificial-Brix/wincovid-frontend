@@ -61,13 +61,13 @@ const PublicRouter = () => {
                 <GetHelpPage searchQuery={searchQuery} />
               </Route>
               <Route path="/ask-for-help">
-                <AskForHelp />
+                <AskForHelp  fetchGetHelpPost={fetchGetHelpPost}  />
               </Route>
               <Route path="/help-us-posts">
                 <HelpUsPage getHelpPosts={getHelpPosts} />
               </Route>
               <Route path="/contribute">
-                <Contribute />
+                <Contribute  fetchGetHelpPost={fetchGetHelpPost} />
               </Route>
               <Route path="/">
                 <Home

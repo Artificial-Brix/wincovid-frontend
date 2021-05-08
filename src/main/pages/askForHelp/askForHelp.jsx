@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
 });
-const AskForHelp = () => {
+const AskForHelp = ({ fetchGetHelpPost }) => {
   const { addToast } = useToasts();
   const history = useHistory();
   const classes = useStyles();
@@ -116,6 +116,8 @@ const AskForHelp = () => {
           food: false,
           others: true
         })
+        history.push('/');
+        fetchGetHelpPost();
       }
     } catch (error) {
       addToast('Can not post try again later', {

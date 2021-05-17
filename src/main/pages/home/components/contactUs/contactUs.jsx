@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import StayHome from './../../../../../assets/stayHome.png';
 import { contactPost } from '../../../../services/contact-api';
 import { useToasts } from 'react-toast-notifications'
-import AlertDialog from './../../../../../main/components/AlertDialog/AlertDialog'
+import AlertDialog from '../../../../components/AlertDialog/AlertDialog'
 const useStyles = makeStyles({
   heading: {
     fontSize: '26px',

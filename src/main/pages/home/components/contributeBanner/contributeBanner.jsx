@@ -4,12 +4,18 @@ import Grid from '@material-ui/core/Grid';
 import HeaderImage from './../../../../../assets/fight.png';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import { useHistory } from "react-router-dom";
+import { useToasts } from 'react-toast-notifications'
+
 const useStyles = makeStyles({
   root: {
     background: 'linear-gradient(80.06deg, #6045E2 0.83%, #6F50FF 100%)',
     margin: '20px 0',
     borderRadius: '4px',
     cursor: "pointer",
+    padding:'5px',
+    '@media (max-width: 600px)' : {
+      margin:'10px 0px',
+    }
   },
   image: {
     maxWidth:'100%',
@@ -44,10 +50,20 @@ const useStyles = makeStyles({
 });
 
 const ContributeCard = () => {
+  const { addToast } = useToasts();
   const classes = useStyles();
   const history = useHistory();
   const handelClick = () =>{
-    history.push('/contribute');
+    const token = sessionStorage.getItem('token');
+    if (!token){
+      addToast('You need to Login before Contribute', {
+        appearance: 'info',
+        autoDismiss: true,
+      });
+      history.push('/login');
+    }else{
+      history.push('/contribute');
+    }
   }
 
   return (

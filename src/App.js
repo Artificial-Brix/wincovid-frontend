@@ -1,26 +1,34 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, } from 'react-router-dom';
-import PublicRouter from './routes/public';
-
+import UserAdminRouter from './routes/UserAdmin';
+import PublicRouter from './routes/Public';
+import Header from './main/components/Header/Header';
+import SuperAdminRouter from './routes/SuperAdmin';
+import { ToastProvider } from 'react-toast-notifications';
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        {/* Login Routes */}
-        <Route exact path='/admin/login'>
+      <ToastProvider placement="bottom-right">
+        <Switch>
+          {/* Super Admin  Routes */}
+          <Route path='/super-admin'>
+            <SuperAdminRouter />
+          </Route>
 
-        </Route>
+          {/* User Admin  Routes */}
+          <Route path='/user'>
+            <Header />
+            <UserAdminRouter />
+          </Route>
 
-        {/* Admin Routes */}
-        <Route path='/admin'>
-        </Route>
+          {/* Public Routes */}
+          <Route path='/'>
+            <Header />
+            <PublicRouter />
+          </Route>
 
-        {/* Public Routes */}
-        <Route path='/'>
-          <PublicRouter />
-        </Route>
-
-      </Switch>
+        </Switch>
+      </ToastProvider>
     </BrowserRouter>
   );
 }

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import virusImage from './../../../../../assets/virus.svg'
 import { useHistory } from "react-router-dom";
-import HelpUsPost from '../../../helpUsPosts/helpUsPost/helpUsPost';
+import NeedHelpPost from '../../../NeedHelp/NeedHelpResult/NeedHelpResult';
 const useStyles = makeStyles({
     heading: {
         fontSize: '24px',
@@ -21,7 +21,11 @@ const useStyles = makeStyles({
         borderRadius: '4px',
         border: 'none',
         margin: '16px 5px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        '@media (max-width: 600px)': {
+            padding: '4px 6px',
+            margin: '10px',
+          },
     },
 
     seeMoreButton: {
@@ -70,7 +74,7 @@ const HelpUs = ({getHelpPosts}) => {
             </Grid>
             <Grid item xs={12}>
                 <Grid container justify='center' alignItems='center'>
-                    <HelpUsPost getHelpPosts={getHelpPosts} limit={4} />
+                    <NeedHelpPost getHelpPosts={getHelpPosts} limit={4} />
                 </Grid>
             </Grid>
             <Grid item xs={12}>

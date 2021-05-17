@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {Link} from 'react-router-dom';
-import ContributeBanner from './components/contributeBanner/contributeBanner';
-import GetHelpSearch from './components/getHelpSearch/getHelpSearch';
-import HelpUs from './components/helpUs/helpUs';
-import ContactUs from './components/contactUs/contactUs';
+import { Link } from 'react-router-dom';
+import ContributeBanner from './Components/ContributeBanner/ContributeBanner';
+import GetHelpSearch from './Components/AskForHelpSearch/AskForHelpSearch';
+import HelpUs from './Components/HelpUs/HelpUs';
+import ContactUs from './Components/ContactUs/ContactUs';
 import Grid from '@material-ui/core/Grid';
 import DisclaimerDialog from '../../components/DisclaimerDialog/DisclaimerDialog';
 
@@ -12,7 +12,6 @@ const Home = ({ getHelpPosts, setSearchQuery }) => {
   const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
 
   const handleOnClick = (e) => {
-    
     setOpenConfirmationDialog(true);
   }
 

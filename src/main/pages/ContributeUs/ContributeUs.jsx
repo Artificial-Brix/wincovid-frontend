@@ -6,11 +6,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useHistory } from 'react-router-dom';
-import isValidPinCode from '../util/validatePinCode';
-import { postHelp } from '../../services/help-api';
-import { useToasts } from 'react-toast-notifications'
+import isValidPinCode from './../util/validatePinCode';
+import { postContribution } from './../../services/contribute-api';
 import AlertDialog from '../../components/AlertDialog/AlertDialog';
+import { useToasts } from 'react-toast-notifications';
 import FormControl from '@material-ui/core/FormControl';
+
 const useStyles = makeStyles({
   heading: {
     fontSize: '28px',
@@ -44,7 +45,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
 });
-const AskForHelp = ({ fetchGetHelpPost }) => {
+const Contribute = ({fetchGetHelpPost}) => {
   const { addToast } = useToasts();
   const history = useHistory();
   const classes = useStyles();
@@ -63,8 +64,17 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
   const [pinCode, setPinCode] = useState('');
   const [additionalDetails, setAdditionalDetails] = useState('');
   const [validationState, setValidationState] = useState(false);
-  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false)
-  const { bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others } = checkBoxData;
+  const [openConfirmationDialog, setOpenConfirmationDialog] = useState(false);
+  const {
+    bloodPlasma,
+    oxygen,
+    ambulance,
+    medicine,
+    beds,
+    icuBeds,
+    food,
+    others,
+  } = checkBoxData;
   const values = [bloodPlasma, oxygen, ambulance, medicine, beds, icuBeds, food, others];
   const handleChange = (event) => {
     setCheckBoxData({
@@ -79,6 +89,7 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
   const isValidName = () => name !== '';
   const isValidPhoneNo = () => phoneNo !== '';
   const isValidAdditionalDetails = () => additionalDetails !== '';
+ 
 
   const confirmPostContribution = async () => {
     const formData = new FormData();
@@ -95,17 +106,17 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
     formData.append('others', checkBoxData.others);
     formData.append('bloodPlasma', checkBoxData.bloodPlasma);
     try {
-      const res = await postHelp(formData)
+      const res = await postContribution(formData);
       if (res.status === 200) {
         addToast('Posted Successfully', {
           appearance: 'success',
           autoDismiss: true,
         });
         setName('');
-        setAdditionalDetails('')
-        setPhoneNo('')
-        setPinCode('')
-        setValidationState(false)
+        setAdditionalDetails('');
+        setPhoneNo('');
+        setPinCode('');
+        setValidationState(false);
         setCheckBoxData({
           bloodPlasma: false,
           oxygen: false,
@@ -114,8 +125,8 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
           beds: false,
           icuBeds: false,
           food: false,
-          others: true
-        })
+          others: true,
+        });
         history.push('/');
         fetchGetHelpPost();
       }
@@ -125,9 +136,8 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
         autoDismiss: true,
       });
     }
-    setOpenConfirmationDialog(false)
-
-  }
+    setOpenConfirmationDialog(false);
+  };
 
   const handleSubmit = async () => {
     setValidationState(true);
@@ -140,7 +150,7 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
       await isValidPinCode(pinCode)
         .then((res) => {
           if (res) {
-            setOpenConfirmationDialog(true)
+            setOpenConfirmationDialog(true);
           } else {
             addToast('Invalid Pincode', {
               appearance: 'error',
@@ -167,7 +177,7 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
               spacing={2}
             >
               <Grid item xs={8} md={10}>
-                <h3 className={classes.heading}>Ask Help By Posting Your Needs</h3>
+                <h3 className={classes.heading}>Contribute To Our Supplies</h3>
               </Grid>
               <Grid item xs={4} md={2}>
                 <button className={classes.button} onClick={handleCancel}>
@@ -185,19 +195,20 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
               variant="outlined"
               fullWidth
               className={classes.inputBox}
-              helperText="Enter your name"
+              helperText="Enter suppliers name"
               value={name}
               onInput={(e) => setName(e.target.value)}
               error={validationState && !isValidName()}
             />
           </Grid>
+         
           <Grid item xs={12}>
             <TextField
               label="Phone No"
               variant="outlined"
               fullWidth
               className={classes.inputBox}
-              helperText="Enter your Phone No"
+              helperText="Enter suppliers Phone No"
               value={phoneNo}
               onInput={(e) => setPhoneNo(e.target.value)}
               error={validationState && !isValidPhoneNo()}
@@ -209,7 +220,7 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
               variant="outlined"
               fullWidth
               className={classes.inputBox}
-              helperText="Enter Your PinCode"
+              helperText="Enter suppliers PinCode"
               value={pinCode}
               onInput={(e) => setPinCode(e.target.value)}
               error={validationState && pinCode.length !== 6}
@@ -218,7 +229,7 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
           <Grid item xs={12}>
             <FormControl error={validationState && !values.some((value) => value === true)}>
               <FormLabel component="legend">
-                Check the resources you need
+                Check the resources you have
             </FormLabel>
             </FormControl>
 
@@ -315,7 +326,6 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
                 />
               </Grid>
               <Grid item xs={6} md={4} lg={2}>
-
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -338,7 +348,7 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
               multiline
               rows={6}
               className={classes.inputBox}
-              helperText="Enter additional details about amount of resources you need and mention other support or resource you need of."
+              helperText="Enter additional details about amount of resources you have and mention other support or resource you can contribute"
               value={additionalDetails}
               onInput={(e) => setAdditionalDetails(e.target.value)}
               error={validationState && !isValidAdditionalDetails()}
@@ -377,4 +387,4 @@ const AskForHelp = ({ fetchGetHelpPost }) => {
   );
 };
 
-export default AskForHelp;
+export default Contribute;
